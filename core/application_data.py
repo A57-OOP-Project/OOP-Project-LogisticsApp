@@ -7,10 +7,14 @@ class ApplicationData:
         self.packages = []
         self.trucks = []
 
-    def find_truck(self, truck_id):
+    def add_truck(self, packages_weight, route_distance):
+        
         pass
 
-    def find_route(self, start_location, end_location):
+    def find_route(self, route_id):
+        pass
+
+    def find_package(self, package_id):
         pass
 
     def display_routes(self):

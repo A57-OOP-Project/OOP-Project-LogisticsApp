@@ -2,7 +2,8 @@ from datetime import datetime, timedelta
 
 
 class Route:
-    def __init__(self, locations: list, departure_time):
+    def __init__(self, id, locations: list):
+        self._id = id 
         self.packages = []
         self.trucks = []
         self.locations = [] #  [(location_1, departure_time), (location_2), arrival_time]
