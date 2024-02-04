@@ -1,5 +1,5 @@
 from models.package import Package
-from models.routr import Route
+from models.route import Route
 
 class ModelsFactory:
     def __init__(self):
