@@ -14,6 +14,9 @@ class FindTruck(BaseCommand):
         
         
     def execute(self):
+       '''
+       need to find a free truck to meet the weight and distance requirements
+       '''
        packages_weight = int(self.params[0])
        route_distance = int(self.params[1])
 
