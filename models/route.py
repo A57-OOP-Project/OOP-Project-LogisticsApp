@@ -6,14 +6,15 @@ class Route:
         self._id = id 
         self.packages = []
         self.trucks = []
-        self.locations = [] #  [(location_1, departure_time), (location_2), arrival_time]
+        self.locations = [] #  [(location_1, departure_time), (location_2), arrival_time)]
 
     
     def add_truck(self, truck):
         pass
 
-    def add_package(self, package):
-        pass
+    def assign_package(self, package):
+        return self.packages.append(package)
+        
     
     def __str__(self) -> str:
         pass
