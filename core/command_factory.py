@@ -5,6 +5,7 @@ from commands.add_route import AddRoute
 from commands.find_route import FindRoute
 from commands.view_system import ViewSystem
 from core.models_factory import ModelsFactory
+from commands.find_truck import FindTruck
 
 class CommandFactory:
     def __init__(self, data: ApplicationData):
@@ -20,6 +21,8 @@ class CommandFactory:
             return AddRoute(params, self._app_data, self._models_factory)
         if cmd.lower() == "findroute":
             return FindRoute(params, self._app_data)
+        if cmd.lower() == "findtruck":
+            return FindTruck(params, self._app_data)
         if cmd.lower() == "viewsystem":
             return ViewSystem(params, self._app_data)
         

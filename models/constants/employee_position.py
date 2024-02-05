@@ -4,9 +4,9 @@ class EmployeePosition:
     MANAGER = 'manager'
 
     @classmethod
-    def from_string(cls, value) -> str:
+    def validate_position(cls, value):
         if value not in [cls.REGULAR, cls.SUPERVISOR, cls.MANAGER]:
             raise ValueError(
                 f'None of the possible employee positions  matches the value {value}.')
 
-        return value
+        #return value

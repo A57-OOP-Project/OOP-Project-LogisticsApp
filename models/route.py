@@ -8,9 +8,7 @@ class Route:
         self.trucks = []
         self.locations = [] #  [(location_1, departure_time), (location_2), arrival_time]
 
-    def calculate_route_distance(self):
-        pass
-
+    
     def add_truck(self, truck):
         pass
 
