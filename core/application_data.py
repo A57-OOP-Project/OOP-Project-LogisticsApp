@@ -41,9 +41,6 @@ class ApplicationData:
 
             
         return estimated_arrival_times
-        
-       
-
         #return lst_locations
 
     def get_delivery_weight(self):

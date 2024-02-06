@@ -17,3 +17,4 @@ class ModelsFactory:
        self._route_id += 1
 
        return Route(route_id, route_locations)
+    

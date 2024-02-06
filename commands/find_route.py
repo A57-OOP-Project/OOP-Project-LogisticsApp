@@ -10,5 +10,8 @@ class FindRoute(BaseCommand):
         
     def execute(self):
         pass
-
+        # start, end, depature time = params
+        # 1. 
+        # using (start,end) check if route exist
+        # 
        # return 
