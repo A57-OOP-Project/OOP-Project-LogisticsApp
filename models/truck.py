@@ -19,7 +19,7 @@ class Truck:
          if Truck.SCANIA_IDS_MIN <= truck_id <= Truck.SCANIA_IDS_MAX:
              self._truck_id = truck_id
          else:
-            raise ValueError("Invalid ID for Scania truck")
+            raise ValueError("Invalid ID for a Scania truck")
          self._name = name
          self._capacity = Truck.SCANIA_CAPACITY
          self._max_range = Truck.SCANIA_MAX_RANGE
@@ -27,7 +27,7 @@ class Truck:
          if Truck.MAN_IDS_MIN <= truck_id <= Truck.MAN_IDS_MAX:
              self._truck_id = truck_id
          else:
-            raise ValueError("Invalid ID for Man truck")
+            raise ValueError("Invalid ID for a Man truck")
          self._name = name
          self._capacity = Truck.MAN_CAPACITY
          self._max_range = Truck.MAN_MAX_RANGE
@@ -35,12 +35,12 @@ class Truck:
          if Truck.ACTROS_IDS_MIN <= truck_id <= Truck.ACTROS_IDS_MAX:
              self._truck_id = truck_id
          else:
-            raise ValueError("Invalid ID for Actros truck")
+            raise ValueError("Invalid ID for an Actros truck")
          self._name = name
          self._capacity = Truck.ACTROS_CAPACITY
          self._max_range = Truck.ACTROS_MAX_RANGE
       else:
-         raise ValueError("Invalid name of truck")
+         raise ValueError("Invalid name of a truck")
       
    @property
    def name(self):

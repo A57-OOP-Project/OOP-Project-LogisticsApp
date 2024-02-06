@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from package import Package
 
 
 class Route:
@@ -6,8 +7,12 @@ class Route:
         self._id = id 
         self._packages = []
         self._trucks = []
+<<<<<<< Updated upstream
         # self._locations: list[tuple[str, datetime]] = [] #  [(location_1, departure_time), (location_2), arrival_time)]
         self._locations = locations
+=======
+        self._locations: list[tuple[str, datetime]] = [] #  [(location_1, departure_time), (location_2), arrival_time)]
+>>>>>>> Stashed changes
 
     @property
     def id(self):
@@ -57,7 +62,11 @@ class Route:
         #Add all the stops. Should they be all or remaining?
         for key in self._locations:
             stops.append(key[0])
+<<<<<<< Updated upstream
                 # #Add total_delivery_weight calc - is ._weight ready in models.package? import models.Package once ready. Create a test.
+=======
+                # #Add total_delivery_weight calc - is ._weight ready in models.package?import class Package. Create a test.
+>>>>>>> Stashed changes
                 # delivery_weight: int = 0
                 # for i in self._packages:
                 #     delivery_weight += i._weight
