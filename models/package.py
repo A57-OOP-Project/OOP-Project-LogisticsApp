@@ -1,3 +1,5 @@
+from customer import Customer
+
 class Package:
    
     def __init__(self, id, start_location, end_location, weight, contact_info):
