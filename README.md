@@ -78,3 +78,41 @@ Teamwork Guidelines
 Please see the Teamwork Guidelines document.
 
 
+Examples
+
+CreatePackage BRI MEL 1500 Pesho,phone:0888777555
+CreatePackage BRI SYD 11000 Olesya,phone:0888999777
+FindRoute BRI MEL
+CreateRoute BRI->SYD->MEL 2024-02-10 08:00
+FindTruck 13000 BRI SYD MEL
+AddTruck scania 1001 1
+AddPackages 1 1 2
+ViewSystem
+ViewPackage 1
+CreatePackage ASP BRI 2000 Zoya,phone:0888555888
+CreatePackage ASP BRI 7000 Zoya,phone:0888555888
+CreatePackage ASP BRI 10000 Zoya,phone:0888555888
+CreatePackage ASP BRI 5000 Zoya,phone:0888555888
+CreatePackage ASP ADL 800 KuKu,phone:0888678678
+CreatePackage MEL BRI 1000 CarnivalKids,phone:0888567567
+CreatePackage ADL SYD 2000 Bravo,phone:0888123456
+CreateRoute ASP->ADL->MEL->SYD->BRI 2024-02-10 14:00
+FindTruck 28000 ASP ADL MEL SYD BRI
+AddTruck scania 1002 2
+AddPackages 2 3 4 5 7 8
+ViewPackage 9
+ViewNotAssigned
+AddPackages 2 6 9
+ViewPackage 9
+CreatePackage ADL BRI 11000 DonaldTrump,phone:0888123123
+CheckRouteCapacity 2 ADL BRI 11000
+end
+
+
+
+
+
+
+
+
+

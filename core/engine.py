@@ -15,7 +15,7 @@ class Engine:
 
                 command = self._command_factory.create(input_line)
                 output.append(command.execute())
-            except ValueError as err:
+            except Exception as err:
                 output.append(err.args[0])
 
         print('\n'.join(output))
