@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 from package import Package
-
+from truck import Truck
 
 class Route:
     def __init__(self, id, locations: list):
         self._id = id 
-        self._packages = []
-        self._trucks = []
+        self._packages: Package = []
+        self._trucks: Truck = []
         # self._locations: list[tuple[str, datetime]] = [] #  [(location_1, departure_time), (location_2, estimated_arrival_time)]
         self._locations: list[tuple[str, datetime]] = locations
 
@@ -39,10 +39,10 @@ class Route:
         '''Depends on constants.distances when the matrix is ready'''
         pass
 
-    def add_truck(self, truck):
-        if truck not in self._trucks:
-            return self._trucks.append(truck)
-        pass
+    def add_truck(self, truck):            
+            if truck not in self._trucks:
+                return self._trucks.append(truck)
+            pass
 
     def assign_package(self, package):
         if package not in self._packages:

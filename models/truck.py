@@ -57,7 +57,10 @@ class Truck:
    @property
    def max_range(self):
       return self._max_range
-
-
-         
-         
+   
+   def all_trucks_ids_spinner(self,id):
+      id += 1
+      for id in range(Truck.SCANIA_IDS_MIN,Truck.ACTROS_IDS_MAX):
+         if id == max(Truck.ACTROS_IDS_MAX):
+            id = Truck.SCANIA_IDS_MIN
+      return id
