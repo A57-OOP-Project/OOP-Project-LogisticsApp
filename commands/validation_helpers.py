@@ -1,11 +1,16 @@
-def validate_params_count(params, count):
+from errors.invalid_params import InvalidParams
+
+
+def validate_params_count(params: list[str], count: int, cmd_name: str):
     if len(params) != count:
-        raise ValueError(
-            f'Invalid number of arguments. Expected: {count}; received: {len(params)}.")')
+        raise InvalidParams(cmd_name, count)
 
 
-def try_parse_int(s):
+
+def try_parse_int(int_string: str, msg: str):
     try:
-        return int(s)
+        return int(int_string)
     except:
-        raise ValueError('Invalid value for weight. It should be an integer.')
+        raise ValueError(msg)
+
+

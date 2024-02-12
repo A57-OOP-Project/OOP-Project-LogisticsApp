@@ -1,18 +1,26 @@
-from datetime import datetime, timedelta
-from package import Package
-from truck import Truck
+from datetime import datetime
+from models.package import Package
+from models.truck import Truck
+from commands.validation_helpers import try_parse_int
 
 class Route:
     def __init__(self, id, locations: list):
         self._id = id 
-        self._packages: Package = []
-        self._trucks: Truck = []
-        # self._locations: list[tuple[str, datetime]] = [] #  [(location_1, departure_time), (location_2, estimated_arrival_time)]
-        self._locations: list[tuple[str, datetime]] = locations
-
+        self._packages = []
+        self._trucks = []
+        self._locations = locations #  [(location_1, departure_time), (location_2), arrival_time)]
+    
     @property
     def id(self):
         return self._id
+    
+    @property
+    def packages(self):
+        return tuple(self._packages)
+    
+    @property
+    def trucks(self):
+        return tuple(self._trucks) 
     
     @property
     def locations(self):
@@ -39,52 +47,89 @@ class Route:
         '''Depends on constants.distances when the matrix is ready'''
         pass
 
-    def add_truck(self, truck):            
-            if truck not in self._trucks:
-                return self._trucks.append(truck)
-            pass
+    def add_truck(self, truck):
+        if truck not in self._trucks:
+            return self._trucks.append(truck)
+        pass
 
     def assign_package(self, package):
         if package not in self._packages:
-            return self._packages.append(package)
-        pass
+            self._packages.append(package)
+        else:
+            raise ValueError("The package has been already assigned")
+
+                
+    def remove_package(self, pack_id):
+        found_package = None
+        for package in self._packages:
+            if package.id == pack_id:
+                found_package = package
+
+        if package is None:
+            return False
+        else:
+            self._packages.remove(found_package)
+            return True    
+            
+   
+       
+    def __str__(self) -> str: 
+        locations_and_times = []
+        for location, time in self._locations:
+            locations_and_times.append(f'{location} ({time})')
+            
+        return " -> ".join(locations_and_times)
+
     
-    def __str__(self) -> str:
-        stops: list = []
-        next_stop = ''
-        if len(self._packages) > 0 and len(self._trucks) > 0: # Check if route is in progress/active
-            pass
-        for location in self._locations:  #Add all the stops. Should they be all or remaining?
-            try: 
-                if type(location) == str:
-                    stops.append(location)
-            except:
-                pass
-        # #Add total_delivery_weight calc - is ._weight ready in models.package? import models.Package once ready. Create a test.
-        # delivery_weight: int = 0
-        # for i in self._packages:
-        #     delivery_weight += i._weight
+    def info(self):
+        info_str = f"Route ID: {self._id}\nLocations: {str(self)}\n"
         
-        #Add next stop based on time of day
-        time_now = datetime.now(tz=None) 
-        for arrival_time_at_stop in self._locations:
-            try:
-                if type(arrival_time_at_stop) == datetime:
-                    if arrival_time_at_stop > time_now:
-                        next_stop = self._locations[self._locations.index(arrival_time_at_stop)-1]
-                        break
-            except:
-                pass
-        return '\n'.join([
-            f'Delivery stops left: {stops}',
-            f'Delivery weight: delivery weight to be added',
-            f'Next stop is: {next_stop}'
-            ])
+        if self._packages:
+            packages_str = "\nAssigned Packages:\n"
+            for package in self._packages:
+                packages_str += f"- Package ID: {package.id}, Start Location: {package.start_location}, End Location: {package.end_location}, Weight: {package.weight}kg\n"
+            info_str += packages_str
+        else:
+            info_str += "\nNo packages assigned to this route.\n"
+            
+        if self._trucks:
+            trucks_str = "\nTrucks:\n"
+            for truck in self._trucks:
+                trucks_str += f"- Truck ID: {truck.truck_id}, Name: {truck.name}, Capacity: {truck.capacity}kg, Max Range: {truck.max_range}km\n"
+            info_str += trucks_str
+        else:
+            info_str += "\nNo trucks assigned to this route.\n"
+        
+        return info_str
+    
+    def get_expected_current_stop(self):
+        current_time = datetime.now()
+        for location, arrival_time in self._locations:
+            if arrival_time > current_time:
+                return location
+        return self._locations[-1][0]
+    
+    
+    def get_delivery_weight(self):
+        assigned_weight = 0
+        unassigned_weight = 0
+        
+        current_time = datetime.now()
+        for location, time in self._locations[1:]:
+            if time <= current_time:
+                assigned_weight_at_stop = sum(package.weight for package in self._packages if package.start_location == location)
+                unassigned_weight_at_stop = sum(package.weight for package in self._packages if package.end_location == location)
+                assigned_weight += assigned_weight_at_stop
+                unassigned_weight += unassigned_weight_at_stop
 
-    def display_route(self):
-        #What is this def for? 
-        pass
-
-# Check
-# route = Route(id=1, locations=("Location1", datetime(2025, 2, 5, 10, 30)))
-# print(route.__str__())
+               
+        delivery_weight = self._trucks[0].capacity + unassigned_weight - assigned_weight
+        return delivery_weight
+    
+    
+    
+    
+       
+    
+    
+    
