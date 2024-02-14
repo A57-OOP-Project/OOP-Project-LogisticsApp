@@ -41,3 +41,4 @@ class Truck:
    def info(self):
       return f"Truck ID: {self.id}\nName: {self.name}\nCapacity: {self.capacity} kg\nMax Range: {self.max_range} km"
    
+
