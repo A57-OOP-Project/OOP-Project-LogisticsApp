@@ -21,12 +21,12 @@ class ViewPackage(BaseCommand):
             package_id_str, 'Package ID should be an integer number')
         package = self.app_data.find_package_by_id(package_id)
         package_info = [f'{package.info()}']
-        route = self.app_data.find_route_by_package_id(package_id)
-        if route is None:
-            route_info = "The package id #{package_id} is not assigned to any route"
+        
+        if package.route is None:
+            route_info = f"Currently the package id #{package_id} is not assigned to any route"
         else:
-            expected_stop = route.get_expected_current_stop()    
-            route_info = f'Route ID: {route._id}, Expected current stop: {expected_stop}'
+            expected_stop = package.route.get_expected_current_stop()    
+            route_info = f'Route ID: {package.route._id}, Expected current stop: {expected_stop}\n'
 
         package_info.append(route_info)
 

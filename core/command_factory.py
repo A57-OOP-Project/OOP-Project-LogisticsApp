@@ -1,6 +1,6 @@
 from commands.view_system import ViewSystem
 from core.application_data import ApplicationData
-from commands.add_packages import AddPackages
+from commands.add_package import AddPackage
 from commands.add_truck import AddTruck
 from commands.find_route import FindRoute
 from commands.view_system import ViewSystem
@@ -9,10 +9,11 @@ from commands.find_truck import FindTruck
 from commands.create_package import CreatePackage
 from commands.create_route import CreateRoute
 from commands.view_not_assigned_packages import ViewNotAssigned
-from commands.view_package_info import ViewPackage
+from commands.view_package import ViewPackage
 from commands.remove_package import RemovePackageFromRoute
 from commands.check_route import CheckRouteCapacity
 from errors.invalid_command import InvalidCommand
+from commands.view_route import ViewRoute
 
 class CommandFactory:
     def __init__(self, data: ApplicationData):
@@ -26,8 +27,8 @@ class CommandFactory:
             return CreatePackage(params, self._app_data, self._models_factory)
         if cmd.lower() == "createroute":
             return CreateRoute(params, self._app_data, self._models_factory)
-        if cmd.lower() == "addpackages":
-            return AddPackages(params, self._app_data)
+        if cmd.lower() == "addpackage":
+            return AddPackage(params, self._app_data)
         if cmd.lower() == "addtruck":
             return AddTruck(params, self._app_data)
         if cmd.lower() == "findroute":
@@ -44,5 +45,7 @@ class CommandFactory:
             return ViewNotAssigned(params, self._app_data)
         if cmd.lower() == "viewpackage":
             return ViewPackage(params, self._app_data)
+        if cmd.lower() == "viewroute":
+            return ViewRoute(params, self._app_data)
         
         raise InvalidCommand(cmd)

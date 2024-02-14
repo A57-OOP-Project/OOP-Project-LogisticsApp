@@ -19,15 +19,17 @@ class FindRoute(BaseCommand):
         start_point_time = None
         end_point_time = None
         for route in self.app_data.routes:
-            for location, time in route.locations:
-                if location == start_location and time >= current_time:
-                    start_point_time = time
-                if location == end_location and time >= current_time:
-                    end_point_time = time 
-        if start_point_time == None or end_point_time == None:
+            for location in route.locations:
+                if location.city == start_location and location.time >= current_time:
+                    start_point_time = location.time
+                if location.city == end_location and location.time >= current_time:
+                    end_point_time = location.time 
+                    
+            if (start_point_time != None) and (end_point_time != None) and (start_point_time < end_point_time):
+                routes.append(f'Route id #{route._id}: ' + str(route))
+                
+        if not routes:
             return f'There are not suitable routes in progress for the specified parameters'
-        if start_point_time < end_point_time:
-            routes.append(f'Route id #{route._id}:' + str(route))
         
         return "\n".join(routes)
     

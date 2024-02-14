@@ -22,7 +22,9 @@ class AddTruck(BaseCommand):
         truck = Truck(name, truck_id)
         self.app_data.add_truck(truck)
         route = self.app_data.find_route_by_id(route_id)
-        route.assign_truck(truck)
+        route.truck = truck
+        for location in route.locations:
+            location.capacity = truck.capacity
         
         return f'Truck id #{truck_id} was added to the route id #{route_id}'
 

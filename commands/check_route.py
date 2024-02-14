@@ -24,7 +24,11 @@ class CheckRouteCapacity(BaseCommand):
         weight = try_parse_int(
             weight_str, 'Weight should be an integer number')
         route = self.app_data.find_route_by_id(route_id)
+        if route.truck == None:
+            return 'There is not any truck assigned to the route id #{route_id}'
+        
         if route.check_capacity(start_location, end_location, weight):
             return f'Route #{route.id} has required capacity for the specified weight' 
         else:
             return f'Route #{route.id} has not required capacity for the specified weight'  
+        

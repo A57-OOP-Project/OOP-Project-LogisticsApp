@@ -25,7 +25,7 @@ class ViewSystem(BaseCommand):
                 f'Route ID: {route._id}\n'
                 f'{str(route)}\n'
                 f'Delivery weight: {delivery_weight}\n'
-                f'Expected current stop: {expected_current_stop}'
+                f'Expected current stop: {expected_current_stop}\n'
                )
             all_routes_info.append(route_info)
             
