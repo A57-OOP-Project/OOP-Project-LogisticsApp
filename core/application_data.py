@@ -67,7 +67,7 @@ class ApplicationData:
         if found_route == None:
             raise ValueError(f'Invalid route id #{r_id}')
         
-        return route
+        return found_route
             
     def is_truck_assigned(self, id) -> bool:
         return id in [truck._id for truck in self._trucks]

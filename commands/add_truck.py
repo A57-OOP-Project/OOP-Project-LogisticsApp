@@ -41,5 +41,5 @@ class AddTruck(BaseCommand):
                         
         Schedule.add_route(truck_id, route_id)  
         
-        result_str += f'Truck id #{truck_id} was assigned to the route id #{route_id}'              
+        result_str += f'Truck id #{truck_id} is assigned to the route id #{route_id}'              
         return result_str

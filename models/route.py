@@ -171,12 +171,17 @@ class Route:
         #     delivery_weight += package.weight                      
                
         # return delivery_weight
-
-        for location in self._locations:
+       
+        if self.locations[0].time > datetime.now():
+            delivery_weight = self.truck.capacity - self.locations[0].capacity
+        elif self.locations[-1].time <= datetime.now(): 
+            delivery_weight = 0   
+        for location in self._locations[:len(self.locations) - 1]:
             if location.time <= datetime.now():
-                delivery_weight = location.capacity
+                delivery_weight = self.truck.capacity - location.capacity
             else:
                 break
+        
         return delivery_weight
     
        
