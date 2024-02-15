@@ -39,52 +39,54 @@ class Route:
                 return location.time.strftime('%Y-%m-%d %H:%M')
     
     
-    def update(self):
-        '''
-        Currently updates info about parcels assigned to a given route: removes delivered packages from the route's list of packages
-        '''
+# def update(self):
+#     '''
+#     Currently updates info about parcels assigned to a given route: removes delivered packages from the route's list of packages
+#     '''`
         
-        delivered_packages = []
-        current_time = datetime.now()   
-        current_location_index = 0
-        for index, location in enumerate(self._locations): 
-            if location.time <= current_time:
-                current_location_index = index
-            else:
-                break
+    #     delivered_packages = []
+    #     current_time = datetime.now()   
+    #     current_location_index = 0
+    #     for index, location in enumerate(self._locations): 
+    #         if location.time <= current_time:
+    #             current_location_index = index
+    #         else:
+    #             break
         
-        if current_location_index != 0:
-            for idx in range(1, current_location_index + 1):        
-                for package in self._packages:
-                    if package.end_location == self._locations[idx].city:
-                        delivered_packages.append(package._id)
+    #     if current_location_index != 0:
+    #         for idx in range(1, current_location_index + 1):        
+    #             for package in self._packages:
+    #                 if package.end_location == self._locations[idx].city:
+    #                     delivered_packages.append(package._id)
                     
        
-            self._packages = [package for package in self._packages if package._id not in delivered_packages] 
+    #         self._packages = [package for package in self._packages if package._id not in delivered_packages]  
         
-       
-                                                             
-        
-    def check_capacity(self, start_location_of_parcel, end_location_of_parcel, weight_of_parcel):
-        '''
-        Calculates capacity that the truck will have in each location along the route of a given parcel.
-        The method returns True if in all locations the truck will have the required capacity 
-        or False - if at least in one of the locations along the route of this parcel the truck will not have the required capacity
-        '''
-        
+     
+    def validate_locations(self, start_stop_of_parcel, end_stop_of_parcel): 
         start_index = None
         end_index = None                                       
         for index, location in enumerate(self._locations): 
-            if location.city == start_location_of_parcel:
+            if location.city == start_stop_of_parcel:
                 start_index = index
                 
-            elif location.city == end_location_of_parcel:
+            elif location.city == end_stop_of_parcel:
                 end_index = index
                 break
                 
-        if start_index == None or end_index == None:                        #or start_index > end_index
-            return False
+        if start_index == None or end_index == None:                       
+            return f'Route id #{self.route_id} is not suitable for the locations and direction of the package'
         
+        return start_index, end_index
+                                                                  
+        
+    def has_capacity(self, start_index, end_index, weight_of_parcel) -> bool: 
+        '''                                                                                               
+        Checks if the capacity of the truck in each location inside the given range from start_index to end_index
+        will be enough for the weight ot the parcel.
+        The method returns True if in all locations the truck has the required capacity 
+        or False - if at least in one of the locations  thetruck  has not the required capacity
+        '''     
         if self._packages:
             for idx in range(start_index, end_index):   
                 if self.locations[idx].capacity < weight_of_parcel:
@@ -92,7 +94,6 @@ class Route:
               
         return True           
                    
-
     
     def assign_package(self, package):
         if package not in self._packages:
@@ -104,9 +105,7 @@ class Route:
     def remove_package(self, pack_id):
         '''
         Remove package from the route.
-        The method provides the opportunity to reassign packages, for example, in cases when an employee should assign
-        multiple packages that must be delivered at the same time to the same location (using AddPackages command) and it turns out
-        that there is not capacity for all the packages.
+        The method provides the opportunity to reassign packages, for example, in cases when an employee assigns wrong package to wrong route
         The possibility is not provided to remove packages from ApplicationData, list with packages.
         
         '''
@@ -158,21 +157,27 @@ class Route:
         return self._locations[-1].city
     
     
-    def get_delivery_weight(self): # To be changed
-        delivery_weight = 0
-        self.update() # to be changed, I don't think I will need that method after change
-        if not self._packages and self._locations[-1].time <= datetime.now():
-            return 'The route is completed'
-        elif not self._packages and self._locations[0].time > datetime.now():
-            return 'There are not assigned packages to this route'
+    def get_delivery_weight(self): #changed 
+        
+        #delivery_weight = 0
+        
+        #  self.update() # I don't think I will need the method update() after the change
+        # if not self._packages and self._locations[-1].time <= datetime.now():
+        #     return 'The route is completed'
+        # elif not self._packages and self._locations[0].time > datetime.now():
+        #     return 'There are not assigned packages to this route'
             
-        for package in self._packages:              
-            delivery_weight += package.weight                      
+        # for package in self._packages:              
+        #     delivery_weight += package.weight                      
                
+        # return delivery_weight
+
+        for location in self._locations:
+            if location.time <= datetime.now():
+                delivery_weight = location.capacity
+            else:
+                break
         return delivery_weight
-    
-    
-    
     
        
     

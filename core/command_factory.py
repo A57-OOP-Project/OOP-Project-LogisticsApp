@@ -15,6 +15,7 @@ from commands.check_route import CheckRouteCapacity
 from errors.invalid_command import InvalidCommand
 from commands.view_route import ViewRoute
 
+
 class CommandFactory:
     def __init__(self, data: ApplicationData):
         self._app_data = data

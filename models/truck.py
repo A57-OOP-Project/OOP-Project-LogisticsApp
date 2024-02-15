@@ -4,7 +4,7 @@ class Truck:
    
    def __init__(self, name: str, truck_id: int):
         truck_info = TruckTypes.DATA.get(name.upper())
-        if truck_info:
+        if truck_info != None:
             if truck_info['ids_min'] <= truck_id <= truck_info['ids_max']:
                 self._id = truck_id
             else:

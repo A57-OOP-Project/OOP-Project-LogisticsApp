@@ -20,6 +20,8 @@ class RemovePackageFromRoute(BaseCommand):
             pack_id_str, 'Package ID should be an integer number')
         route = self.app_data.find_route_by_id(route_id)
         if route.remove_package(package_id):
+            package = self.app_data.find_package_by_id(package_id)
+            package.route = None
             return f'Package #{package_id} was removed from route #{route_id}'
         else:
             return f'Package #{package_id} is not found'

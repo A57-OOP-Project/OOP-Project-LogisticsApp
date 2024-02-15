@@ -1,3 +1,4 @@
+#from __future__ import annotations
 from models.constants.distances import Distances
 from datetime import datetime, timedelta
 from models.package import Package
@@ -6,6 +7,7 @@ from models.truck import Truck
 from models.constants.truck_types import TruckTypes
 from models.location import Location
 import pickle
+from models.schedule import Schedule
 
 class ApplicationData:
     def __init__(self):
@@ -52,8 +54,10 @@ class ApplicationData:
         for package in self._packages:
             if package._id == pack_id:
                 return package
+        
+        raise ValueError(f'Invalid package id: {pack_id}')    
+            
 
-        raise ValueError(f'Package with id #{pack_id} does not exist!')
     
     def find_route_by_id(self, r_id) -> Route:
         found_route = None
@@ -61,12 +65,21 @@ class ApplicationData:
             if route._id == r_id:
                 found_route = route
         if found_route == None:
-            raise ValueError(f'There is no route with id #{r_id}')
+            raise ValueError(f'Invalid route id #{r_id}')
         
         return route
             
     def is_truck_assigned(self, id) -> bool:
         return id in [truck._id for truck in self._trucks]
+    
+    def find_truck_by_id(self, tr_id) -> Truck:
+        
+        for truck in self._trucks:
+            if truck.id == tr_id:
+                return truck
+            
+        raise ValueError(f'Invalid truck id: {tr_id}')    
+        
     
         
     def get_estimated_arrival_times(self, locations_strings: list[str], departure_time: str): #departure_time is a string in format 'YYYY-MM-DD HH:MM'
@@ -93,20 +106,41 @@ class ApplicationData:
      
         
     def find_suitable_trucks(self, packages_weight, route_distance):
-        suitable_trucks = []
-        unsuitable_trucks = ''
+        suitable_available_trucks = []
+        suitable_involved_trucks = []
+        unsuitable_trucks_name = ''
+        
         for truck_type, truck_info in TruckTypes.DATA.items():
             if truck_info['capacity'] >= packages_weight and truck_info['max_range'] >= route_distance:
                 truck_ids = range(truck_info['ids_min'], truck_info['ids_max'] + 1)
                 for truck_id in truck_ids:
                     if not self.is_truck_assigned(truck_id):
-                        suitable_trucks.append(truck_id)
-            else: unsuitable_trucks = truck_type
+                        suitable_available_trucks.append(truck_id)
+                    else:
+                        for route_id in Schedule.DATA[truck_id]:
+                            route = self.find_route_by_id(route_id)
+                            suitable_involved_trucks.append(f'Route id #{route_id}: {str(route)}')
+            else: unsuitable_trucks_name = truck_type
+             
+        return suitable_available_trucks, suitable_involved_trucks, unsuitable_trucks_name
+    
+  
+    def is_conflict(self, truck_id, route_id_number) -> bool:
+       if truck_id not in Schedule.DATA or route_id_number not in Schedule.DATA[truck_id]:
+           raise ValueError('Invalid truck id or route id')
+       new_route = self.find_route_by_id(route_id_number)
+       start_time_new_route = new_route.locations[0].time
+       end_time_new_route = new_route.locations[-1].time
             
-        return suitable_trucks, unsuitable_trucks
-    
-    def create_schedule(self):
-        pass
-    
+       for route_id in Schedule.DATA[truck_id]:
+           route_in_schedule = self.find_route_by_id(route_id)
+           start_time_route_in_schedule = route_in_schedule.locations[0].time
+           end_time_route_in_schedule = route_in_schedule.locations[-1].time
+           if start_time_route_in_schedule <= end_time_new_route and end_time_route_in_schedule >= start_time_new_route:
+               return True
+           
+       return False
+       
+       
     def save_state(self, filename):
         pass
