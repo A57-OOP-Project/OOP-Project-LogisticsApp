@@ -157,34 +157,23 @@ class Route:
         return self._locations[-1].city
     
     
-    def get_delivery_weight(self): #changed 
+    def get_delivery_weight(self): 
+        current_time = datetime.now()
+        delivery_weight = self.truck.capacity
         
-        #delivery_weight = 0
-        
-        #  self.update() # I don't think I will need the method update() after the change
-        # if not self._packages and self._locations[-1].time <= datetime.now():
-        #     return 'The route is completed'
-        # elif not self._packages and self._locations[0].time > datetime.now():
-        #     return 'There are not assigned packages to this route'
-            
-        # for package in self._packages:              
-        #     delivery_weight += package.weight                      
-               
-        # return delivery_weight
-       
-        if self.locations[0].time > datetime.now():
-            delivery_weight = self.truck.capacity - self.locations[0].capacity
-        elif self.locations[-1].time <= datetime.now(): 
-            delivery_weight = 0   
-        for location in self._locations[:len(self.locations) - 1]:
-            if location.time <= datetime.now():
-                delivery_weight = self.truck.capacity - location.capacity
-            else:
-                break
+        if current_time >= self.locations[0].time:
+           for location in self.locations:
+                if location.time <= current_time:
+                    delivery_weight -= location.capacity
+                else:
+                    break  
+        else:
+            delivery_weight = 0  
         
         return delivery_weight
     
-       
     
+    
+                   
     
     
