@@ -27,7 +27,8 @@ class CheckRouteCapacity(BaseCommand):
         if route.truck == None:
             return 'There is not any truck assigned to the route id #{route_id}'
         
-        if route.check_capacity(start_location, end_location, weight):
+        start_index, end_index = route.validate_locations(start_location, end_location)
+        if route.has_capacity(start_index, end_index, weight):
             return f'Route #{route.id} has required capacity for the specified weight' 
         else:
             return f'Route #{route.id} has not required capacity for the specified weight'  
