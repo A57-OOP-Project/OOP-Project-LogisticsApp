@@ -20,6 +20,9 @@ class CommandFactory:
     def __init__(self, data: ApplicationData):
         self._app_data = data
         self._models_factory = ModelsFactory()
+        
+    def get_app_data(self):
+        return self._app_data
 
     def create(self, input_line):
         cmd, *params = input_line.split()

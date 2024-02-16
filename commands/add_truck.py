@@ -32,7 +32,7 @@ class AddTruck(BaseCommand):
             for location in route.locations:
                 location.capacity = new_truck.capacity
         else:
-            if self.app_data.is_conflict(truck_id, route_id):
+            if self.app_data.is_schedule_conflict(truck_id, route_id):
                 return f'Schedule conflict: routes time ranges overlap. Truck id #{truck_id} cannot be assigned to the route id #{route_id}'    
             truck = self.app_data.find_truck_by_id(truck_id)
             route.truck = truck

@@ -7,6 +7,7 @@ from models.truck import Truck
 from models.constants.truck_types import TruckTypes
 from models.location import Location
 import pickle
+import os 
 from models.schedule import Schedule
 
 class ApplicationData:
@@ -125,7 +126,7 @@ class ApplicationData:
         return suitable_available_trucks, suitable_involved_trucks, unsuitable_trucks_name
     
   
-    def is_conflict(self, truck_id, route_id_number) -> bool:
+    def is_schedule_conflict(self, truck_id, route_id_number) -> bool:
        if truck_id not in Schedule.DATA or route_id_number not in Schedule.DATA[truck_id]:
            raise ValueError('Invalid truck id or route id')
        new_route = self.find_route_by_id(route_id_number)
@@ -142,5 +143,32 @@ class ApplicationData:
        return False
        
        
-    def save_state(self, filename):
-        pass
+    def save_data(self):
+        '''
+        this method is responsible for saving the application data to a file using the pickle module
+        
+        '''
+        data = {
+            "routes": self._routes,
+            "packages": self._packages,
+            "trucks": self._trucks,
+        }
+ 
+        file_path = "data/app_data.pickle"
+        if not os.path.exists(os.path.dirname(file_path)):
+            os.makedirs(os.path.dirname(file_path))
+ 
+        with open("data/app_data.pickle", "wb") as file:
+            pickle.dump(data, file)
+ 
+    def load_data(self):
+        '''
+        this  method is responsible for loading the application data from the saved file
+        
+        '''
+        if os.path.isfile("data/app_data.pickle"):
+            with open("data/app_data.pickle", "rb") as file:
+                data = pickle.load(file)
+                self._routes = data["routes"]
+                self._packages = data["packages"]
+                self._trucks = data["trucks"]
