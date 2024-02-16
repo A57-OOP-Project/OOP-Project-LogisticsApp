@@ -1,11 +1,12 @@
 import unittest
 from datetime import datetime
+from models.location import Location
 
 
 class LocationShould(unittest.TestCase):
 
     def setUp(self):
-        self.location = "SYD", datetime.now()
+        self.location = Location("SYD", datetime.now())
 
     def test_city_immutable(self):
         with self.assertRaises(AttributeError):
