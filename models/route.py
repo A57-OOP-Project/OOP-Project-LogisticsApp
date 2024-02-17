@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from models.package import Package
 from models.truck import Truck
 from commands.validation_helpers import try_parse_int
@@ -37,30 +37,7 @@ class Route:
         for location in self._locations:
             if location.city == parcel_end_location:
                 return location.time.strftime('%Y-%m-%d %H:%M')
-    
-    
-# def update(self):
-#     '''
-#     Currently updates info about parcels assigned to a given route: removes delivered packages from the route's list of packages
-#     '''`
-        
-    #     delivered_packages = []
-    #     current_time = datetime.now()   
-    #     current_location_index = 0
-    #     for index, location in enumerate(self._locations): 
-    #         if location.time <= current_time:
-    #             current_location_index = index
-    #         else:
-    #             break
-        
-    #     if current_location_index != 0:
-    #         for idx in range(1, current_location_index + 1):        
-    #             for package in self._packages:
-    #                 if package.end_location == self._locations[idx].city:
-    #                     delivered_packages.append(package._id)
-                    
-       
-    #         self._packages = [package for package in self._packages if package._id not in delivered_packages]  
+     
         
      
     def validate_locations(self, start_stop_of_parcel, end_stop_of_parcel): 
@@ -149,16 +126,16 @@ class Route:
         
         return info_str
     
-    def get_expected_current_stop(self):
-        current_time = datetime.now()
+    def get_expected_current_stop(self, time_delta):
+        current_time = datetime.now() + timedelta(hours=time_delta)
         for location in self._locations:
             if location.time > current_time:
                 return location.city
         return self._locations[-1].city
     
     
-    def get_delivery_weight(self): 
-        current_time = datetime.now()
+    def get_delivery_weight(self, time_delta): 
+        current_time = datetime.now() + timedelta(hours=time_delta)
         delivery_weight = self.truck.capacity
         
         if current_time >= self.locations[0].time:
