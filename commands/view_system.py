@@ -1,6 +1,6 @@
 from commands.base.base_command import BaseCommand
 from core.application_data import ApplicationData
-
+from commands.validation_helpers import validate_params_count, try_parse_int
 
 class ViewSystem(BaseCommand):
     
@@ -10,17 +10,21 @@ class ViewSystem(BaseCommand):
     '''
     def __init__(self, params: list[str],
                  app_data: ApplicationData):
+        validate_params_count(params, 1, 'ViewSystem')
         super().__init__(params, app_data)
-        
+     
 
     def execute(self):
+        time_delta_str = self.params[0] #timedelta: hours
+        time_delta = try_parse_int(
+            time_delta_str, 'TimeDelta should be an integer number')
         all_routes_info = []
         if not self.app_data.routes:
             return 'Currently there are no routes in progress'
         
         for route in self.app_data.routes:
-            delivery_weight = route.get_delivery_weight()
-            expected_current_stop = route.get_expected_current_stop()
+            delivery_weight = route.get_delivery_weight(time_delta)
+            expected_current_stop = route.get_expected_current_stop(time_delta)
             route_info = (
                 f'Route ID: {route._id}\n'
                 f'{str(route)}\n'
