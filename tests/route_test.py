@@ -6,7 +6,7 @@ from models.location import Location
 from models.package import Package
 
 
-class TestRoute(unittest.TestCase):
+class RouteShould(unittest.TestCase):
     def setUp(self):
         # locations of the route
         self.location1 = Location("SYD", datetime(2024, 2, 17, 8, 0))
