@@ -11,7 +11,7 @@ class Engine:
         
         while True:
             try:
-                input_line = input("Enter command, please: ")
+                input_line = input("Please enter your command: ")
                 if input_line.lower() == 'end':
                     break
 
