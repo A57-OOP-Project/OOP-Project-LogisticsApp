@@ -64,9 +64,13 @@ class Route:
         
      
     def validate_locations(self, start_stop_of_parcel, end_stop_of_parcel): 
+        # Checks if the cities exist in route written in console
+        # Checks correct direction (2 examples): 
+        # Example with the correct direction: first it finds the start_index (no break command) then end_index and breaks. 
+        # Example with the wrong direction: first it finds the end_index and breaks, leaving start_index = None)
         start_index = None
         end_index = None                                       
-        for index, location in enumerate(self._locations): 
+        for index, location in enumerate(self._locations): # Q - What are the locations? How is the self._locations filled in? Are they the locations for this route id? They should be assigned to a specific route id, correct?
             if location.city == start_stop_of_parcel:
                 start_index = index
                 
@@ -75,7 +79,7 @@ class Route:
                 break
                 
         if start_index == None or end_index == None:                       
-            return f'Route id #{self.route_id} is not suitable for the locations and direction of the package'
+            return f'Route id #{self.route_id} is not suitable for the locations and direction of the package.'
         
         return start_index, end_index
                                                                   
@@ -83,18 +87,16 @@ class Route:
     def has_capacity(self, start_index, end_index, weight_of_parcel) -> bool: 
         '''                                                                                               
         Checks if the capacity of the truck in each location inside the given range from start_index to end_index
-        will be enough for the weight ot the parcel.
+        will be enough for the weight of the parcel.
         The method returns True if in all locations the truck has the required capacity 
-        or False - if at least in one of the locations  thetruck  has not the required capacity
-        '''     
+        or False - if at least in one of the locations the truck has not the required capacity
+        '''
         if self._packages:
             for idx in range(start_index, end_index):   
-                if self.locations[idx].capacity < weight_of_parcel:
-                  return False   
-              
-        return True           
-                   
-    
+                if self.locations[idx].capacity < weight_of_parcel: # Here it is not self._locations. Is there a reason? # Again(similar to validate_locations) does it go through the locations.cities of the correct route_id? 
+                  return False
+        return True
+
     def assign_package(self, package):
         if package not in self._packages:
             self._packages.append(package)

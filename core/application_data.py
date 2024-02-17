@@ -127,9 +127,10 @@ class ApplicationData:
     
   
     def is_schedule_conflict(self, truck_id, route_id_number) -> bool:
+       # Checks that if truck is created, we validate that truck is in Schedule.DATA and route is assigned which is expected. 
        if truck_id not in Schedule.DATA or route_id_number not in Schedule.DATA[truck_id]:
            raise ValueError('Invalid truck id or route id')
-       new_route = self.find_route_by_id(route_id_number)
+       new_route = self.find_route_by_id(route_id_number) # Q - Should we change from new_route to route as it is an existing route, not new?
        start_time_new_route = new_route.locations[0].time
        end_time_new_route = new_route.locations[-1].time
             
