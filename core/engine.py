@@ -7,22 +7,24 @@ class Engine:
         
     def start(self):
         self.app_data.load_data() #Load data from file if it exists
-        output = []
+        
         
         while True:
+            output = ''
             try:
-                input_line = input("Enter command, please: ")
+                input_line = input("Please enter your command: ")
                 if input_line.lower() == 'end':
                     break
 
                 command = self._command_factory.create(input_line)
-                output.append(command.execute())
+                output = command.execute()
             except Exception as err:
-                output.append(err.args[0])
-                
+                output = err.args[0]
+            print(output)   
+              
         self.app_data.save_data()
 
-        print('\n'.join(output)) 
+        #print('\n'.join(output)) 
 
 
 # class Engine:

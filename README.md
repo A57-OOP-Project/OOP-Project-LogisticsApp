@@ -4,13 +4,13 @@ Examples
 CreatePackage BRI MEL 1500 Pesho,phone:0888777555
 CreatePackage BRI SYD 11000 Olesya,phone:0888999777
 FindRoute BRI MEL
-CreateRoute BRI->SYD->MEL 2024-02-15 23:00
+CreateRoute BRI->SYD->MEL 2024-02-17 14:00
 FindTruck 13000 BRI SYD MEL
 AddTruck scania 1001 1
 ViewRoute 1
 AddPackage 1 1 
 AddPackage 1 2 
-ViewSystem
+ViewSystem 0
 ViewPackage 1
 CreatePackage ASP BRI 2000 Zoya,phone:0888555888
 CreatePackage ASP BRI 7000 Zoya,phone:0888555888
@@ -19,7 +19,7 @@ CreatePackage ASP BRI 5000 Zoya,phone:0888555888
 CreatePackage ASP ADL 800 KuKu,phone:0888678678
 CreatePackage MEL BRI 1000 CarnivalKids,phone:0888567567
 CreatePackage ADL SYD 2000 Bravo,phone:0888123456
-CreateRoute ASP->ADL->MEL->SYD->BRI 2024-02-16 14:00
+CreateRoute ASP->ADL->MEL->SYD->BRI 2024-02-17 23:00
 FindTruck 28000 ASP ADL MEL SYD BRI
 AddTruck scania 1002 2
 AddPackage 2 3 

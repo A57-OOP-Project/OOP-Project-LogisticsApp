@@ -128,7 +128,7 @@ class Route:
         
         return info_str
     
-    def get_expected_current_stop(self, time_delta):
+    def get_expected_current_stop(self, time_delta=0):
         current_time = datetime.now() + timedelta(hours=time_delta)
         for location in self._locations:
             if location.time > current_time:
@@ -138,16 +138,18 @@ class Route:
     
     def get_delivery_weight(self, time_delta): 
         current_time = datetime.now() + timedelta(hours=time_delta)
-        delivery_weight = self.truck.capacity
+        delivery_weight = self.truck.capacity 
         
-        if current_time >= self.locations[0].time:
+        if self.locations[0].time < current_time < self.locations[-1].time:
            for location in self.locations:
                 if location.time <= current_time:
-                    delivery_weight -= location.capacity
+                    current_capacity = location.capacity
                 else:
                     break  
         else:
-            delivery_weight = 0  
+            return 0 
+                      
+        delivery_weight -= current_capacity
         
         return delivery_weight
     
