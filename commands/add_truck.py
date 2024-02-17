@@ -7,7 +7,7 @@ from models.schedule import Schedule
 
 class AddTruck(BaseCommand):
     #creates an instance of class Truck 
-    #appends created truck to the list in the selected route and to the corresponding list in ApplicationData 
+    #appends created truck to the selected route and to the corresponding list in ApplicationData 
     
     def __init__(self, params: list[str],
                  app_data: ApplicationData):
@@ -21,10 +21,15 @@ class AddTruck(BaseCommand):
         truck_id = try_parse_int(
             truck_id_str, 'Truck ID should be an integer number')
         result_str = ''
+        # Checks if selected route exists 
         route = self.app_data.find_route_by_id(route_id)
+        # Checks if there is an assigned truck to the selected route
         if route.truck != None:
             result_str = f'To the route id #{route_id} currently is assigned truck id #{route.truck.id}. The truck reassignment is expected\n'
-         
+        # Assumption: Each route has one truck so if truck instance is created, it is assigned.
+        # Check if truck is not assigned hence not created as an instance.
+        # If not created, creates an instance of a truck, adds to list in app data and to route, assigns capacity of route.locations as per the truck capacity
+        # If created, checks for conflicint schedule
         if not self.app_data.is_truck_assigned(truck_id):
             new_truck = Truck(name, truck_id)
             self.app_data.add_truck(new_truck)

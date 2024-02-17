@@ -14,7 +14,7 @@ class Schedule:
         if truck_id in cls.DATA:
             cls.DATA[truck_id].append(route_id)
         else:
-            cls.DATA[truck_id] = [route_id]    
+            cls.DATA[truck_id] = [route_id]    # Q - I do not understand this. What format does it result it? 
        
         
 #    @classmethod
