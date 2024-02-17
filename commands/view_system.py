@@ -20,7 +20,7 @@ class ViewSystem(BaseCommand):
             time_delta_str, 'TimeDelta should be an integer number')
         all_routes_info = []
         if not self.app_data.routes:
-            return 'Currently there are not routes in progress'
+            return 'Currently there are no routes in progress'
         
         for route in self.app_data.routes:
             delivery_weight = route.get_delivery_weight(time_delta)
