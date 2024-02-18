@@ -136,7 +136,6 @@ class ApplicationData_Should(TestCase):
         self.assertEqual(suitable_involved_trucks, involved_trucks)
         self.assertEqual(unsuitable_trucks_names, unsuitable_trucks)
     
-
     
     def test_get_estimated_arrival_timesReturnsCorrectResult(self):
         
@@ -148,9 +147,7 @@ class ApplicationData_Should(TestCase):
         for i in range(len(locations_of_route)):
             self.assertEqual(self.route.locations[i].city, locations_of_route[i].city)
             self.assertEqual(self.route.locations[i].time, locations_of_route[i].time)
-           
-        
-    
+             
         
     
     def test_is_schedule_conflictReturnsCorrectResult(self):
