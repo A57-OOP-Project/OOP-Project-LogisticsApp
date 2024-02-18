@@ -23,7 +23,8 @@ It supports packages, routes, trucks and customer information. Embedded in the a
     - **Weight of the package** - should be a number up to the maximum capacity of the truck
     - **Customer contact info** - ????????????
 
-&ensp;&ensp;&ensp;It automatically creates an ID of the package. 
+&ensp;&ensp;&ensp;It automatically creates an ID of the package. <br/>
+&ensp;&ensp;&ensp;Example: `CreatePackage BRI MEL 1500 Pesho,phone:0888777555`
 
 #### &ensp;&ensp;1.2 Add a package to a route
 &ensp;&ensp;&ensp;***Prerequisites:** Need to create the **route** prior to assigning any packages to it. The **package** should have been created prior to assigning it to a route as well <br/>
@@ -32,17 +33,25 @@ It supports packages, routes, trucks and customer information. Embedded in the a
     - **Route ID** - the route to which we are adding the package
     - **Package ID** - the package tp be added to this specific route
 
+&ensp;&ensp;&ensp;Example: `AddPackage 1 1` 
+
 #### &ensp;&ensp;1.3 View created but unassgined packages
 - Command is `ViewNotAssigned` and *no parameters are required* 
+
+&ensp;&ensp;&ensp;Example: `ViewNotAssigned` 
  
 #### &ensp;&ensp;1.4 View the status of a package using its ID 
 - Command is `ViewPackage ` and you need to include:
     - **Package ID** is the only parameter
 
+&ensp;&ensp;&ensp;Example: `ViewPackage 1` 
+
 #### &ensp;&ensp;1.5 Remove package from a route 
 - Command is `RemovePackageFromRoute` and you need to include parameters in the following order:
     - **Route ID** - the route from which the package is being removed
     - **Package ID** - the package to be removed from this specific route
+
+&ensp;&ensp;&ensp;Example: `RemovePackageFromRoute 2 5` 
 
 ### 2. Routes
 &ensp;&ensp;&ensp;By using commands you can manage the routes by creating it in the system, assigning packages and trucks to it, check detailed information for a route.
@@ -51,6 +60,7 @@ It supports packages, routes, trucks and customer information. Embedded in the a
 - Command is `CreateRoute` and you need to include:
     - **Stops** - use the location hub abbreviation further below. Please separate them by **'->'** no spaces around them e.g. **MEL->BRI->ASP**
 
+&ensp;&ensp;&ensp;Example: `CreateRoute BRI->SYD->MEL 2024-02-15 23:00` <br/>
 &ensp;&ensp;&ensp;It automatically creates an ID of the route. 
 
 #### &ensp;&ensp;2.2 Find existing routes present in the system 
@@ -58,9 +68,13 @@ It supports packages, routes, trucks and customer information. Embedded in the a
     - **Start location** - use the corresponding abbreviation below for the location
     - **End location** - use the corresponding abbreviation below for the location
 
+&ensp;&ensp;&ensp;Example: `FindRoute BRI MEL` <br/>
+
 #### &ensp;&ensp;2.3 Request detailed information on a specific route
 - Command is `ViewRoute` and include:
     - **Route ID** is the only parameter
+
+&ensp;&ensp;&ensp;Example: `ViewRoute 1` <br/>
 
 #### &ensp;&ensp;2.4 Check route's capacity using the required weight capacity and locations
 - Command is `CheckRouteCapacity` and include the following parameters in this order:
@@ -69,8 +83,11 @@ It supports packages, routes, trucks and customer information. Embedded in the a
     - **End location** - it should be text (string)
     - **Weight** - the required weight capacity for the route. It should be a number (integer)
 
+&ensp;&ensp;&ensp;Example: `CheckRouteCapacity 2 ADL BRI 11000` <br/>
+
 ### 3. Trucks
-&ensp;&ensp;&ensp;By using commands you can manage the trucks by finding a suitable truck for a route, adding it directly to a route.<br/>
+&ensp;&ensp;&ensp;By using commands you can manage the trucks by finding a suitable truck for a route, adding it directly to a route.
+
 &ensp;&ensp;&ensp;**Important assumption: Only one truck can be added to any one route.**
 
 #### &ensp;&ensp;3.1 Add truck to a route
@@ -79,17 +96,20 @@ It supports packages, routes, trucks and customer information. Embedded in the a
     - **Truck ID** - truck ID to which we want to assign the package. ??????? Q below
     - **Route ID** - which route to be added
 
+&ensp;&ensp;&ensp;Example: `AddTruck scania 1002 2` <br/>
+
 #### &ensp;&ensp;3.2 Find a suitable truck for the required route (with associated stops) and required weight capacity.
 - Command is `FindTruck` and include the following parameters in this order:
     - **Weight** - what the weight capacity required. It should be a number (integer)
     - **Locations** - please include all location hubs which the truck is required to make a stop. Use the abbreviations below.
 
+&ensp;&ensp;&ensp;Example: `FindTruck 13000 BRI SYD MEL` <br/>
 
 ### 4. View status of the system 
 &ensp;&ensp;&ensp;Overall status of items in progress:
 - Command is `ViewSystem` and *no parameters are required* 
 
-
+&ensp;&ensp;&ensp;Example: `ViewSystem` <br/>
 
 
 ## Databases
