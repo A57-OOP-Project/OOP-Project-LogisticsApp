@@ -11,7 +11,7 @@ class RouteShould(unittest.TestCase):
         # locations of the route
         self.location1 = Location("SYD", datetime(2024, 2, 17, 8, 0))
         self.location2 = Location("MEL", datetime(2024, 2, 17, 12, 0))
-        self.location3 = Location("ADL", datetime(2024, 2, 17, 16, 0))
+        self.location3 = Location("ADL", datetime(2024, 17, 16, 0))
 
         self.truck = Truck("Truck1", 26000)
 
@@ -28,9 +28,9 @@ class RouteShould(unittest.TestCase):
 
     def test_validate_locations(self):
         self.assertEqual(self.route.validate_locations("SYD", "ADL"), (0, 2))  # valid start and end locations
-        self.assertIsNone(self.route.validate_locations("SYD", "BRI"))  # invalid end location
-        self.assertIsNone(self.route.validate_locations("BRI", "ADL"))  # invalid start location
-        self.assertIsNone(self.route.validate_locations("BRI", "DAR"))  # invalid locations
+        self.assertIsNone(self.route.validate_locations("SYD", "BRI"), "Route id #1 is not suitable for the locations and direction of the package.")  # invalid end location
+        self.assertIsNone(self.route.validate_locations("BRI", "ADL"), "Route id #1 is not suitable for the locations and direction of the package.")  # invalid start location
+        self.assertIsNone(self.route.validate_locations("BRI", "DAR"), "Route id #1 is not suitable for the locations and direction of the package.")  # invalid locations
 
     def test_has_capacity(self):
         self.assertTrue(self.route.has_capacity(0, 2, 3000))  # enough capacity
@@ -50,25 +50,25 @@ class RouteShould(unittest.TestCase):
         self.assertEqual(self.route.get_expected_current_stop(), "SYD")
 
         # current time is between SYD and MEL times
-        current_time = datetime(2024, 2, 17, 10, 0)
+        self.current_time = datetime(2024, 2, 17, 10, 0)
         self.assertEqual(self.route.get_expected_current_stop(), "MEL")
 
         # current time is after final stop
-        current_time = datetime(2024, 2, 17, 17, 0)
+        self.current_time = datetime(2024, 2, 17, 16, 0)
         self.assertEqual(self.route.get_expected_current_stop(), "ADL")
 
-    # def test_get_delivery_weight(self):
-    #     # current time is before any location time
-    #     self.assertEqual(self.route.get_delivery_weight(), 0)
-    #
-    #     # current time is between SYD and MEL times
-    #     current_time = datetime(2024, 2, 17, 9, 0)
-    #     self.assertEqual(self.route.get_delivery_weight(), 1000)
-    #
-    #     # current time is between MEL and ADL
-    #     current_time = datetime(2024, 2, 17, 13, 0)
-    #     self.assertEqual(self.route.get_delivery_weight(), 2000)
-    #
-    #     # current time is after final stop
-    #     current_time = datetime(2024, 2, 17, 17, 0)
-    #     self.assertEqual(self.route.get_delivery_weight(), 26000)
+    def test_get_delivery_weight_before_any_location_time(self):                                                #????
+        delivery_weight = self.route.get_delivery_weight(-1)  # simulating 1 hour before the first location
+        self.assertEqual(delivery_weight, 26000)
+
+    def test_get_delivery_weight_between_location_times(self):
+        delivery_weight = self.route.get_delivery_weight(2)  # simulating 10:00
+        self.assertEqual(delivery_weight,
+                         25000)
+
+    def test_get_delivery_weight_after_final_stop(self):
+        delivery_weight = self.route.get_delivery_weight(8)  # simulating 16:00
+        self.assertEqual(delivery_weight, 26000)
+
+
+
