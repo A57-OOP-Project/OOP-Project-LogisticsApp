@@ -23,10 +23,10 @@ class TruckTypes:
     }
     
     @classmethod
-    def format_truck_info(cls, suitable_trucks: list, unsuitable_trucks: str):
+    def format_truck_info(cls, suitable_trucks: list, unsuitable_trucks: set):
         truck_info = []
         for truck_type, ids_range in [('Scania', (1001, 1011)), ('Man', (1011, 1026)), ('Actros', (1026, 1041))]:
-            if truck_type.upper() == unsuitable_trucks:
+            if truck_type.upper() in unsuitable_trucks:
                 continue
             truck_ids = [truck_id for truck_id in suitable_trucks if truck_id in range(*ids_range)]
             truck_info.append(f"Name: {truck_type}, Capacity: {cls.DATA[truck_type.upper()]['capacity']} kg, Max Range: {cls.DATA[truck_type.upper()]['max_range']} km\nTruck IDs: {', '.join(map(str, truck_ids))}")

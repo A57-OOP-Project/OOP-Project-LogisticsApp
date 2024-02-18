@@ -109,7 +109,7 @@ class ApplicationData:
     def find_suitable_trucks(self, packages_weight, route_distance):
         suitable_available_trucks = []
         suitable_involved_trucks = []
-        unsuitable_trucks_name = ''
+        unsuitable_trucks = set()
         
         for truck_type, truck_info in TruckTypes.DATA.items():
             if truck_info['capacity'] >= packages_weight and truck_info['max_range'] >= route_distance:
@@ -121,16 +121,14 @@ class ApplicationData:
                         for route_id in Schedule.DATA[truck_id]:
                             route = self.find_route_by_id(route_id)
                             suitable_involved_trucks.append(f'Route id #{route_id}: {str(route)}')
-            else: unsuitable_trucks_name = truck_type
+            else: unsuitable_trucks.add(truck_type)
              
-        return suitable_available_trucks, suitable_involved_trucks, unsuitable_trucks_name
+        return suitable_available_trucks, suitable_involved_trucks, unsuitable_trucks
     
   
     def is_schedule_conflict(self, truck_id, route_id_number) -> bool:
-       # Checks that if truck is created, we validate that truck is in Schedule.DATA and route is assigned which is expected. 
-       if truck_id not in Schedule.DATA or route_id_number not in Schedule.DATA[truck_id]:
-           raise ValueError('Invalid truck id or route id')
-       new_route = self.find_route_by_id(route_id_number) # Q - Should we change from new_route to route as it is an existing route, not new?
+      
+       new_route = self.find_route_by_id(route_id_number) 
        start_time_new_route = new_route.locations[0].time
        end_time_new_route = new_route.locations[-1].time
             

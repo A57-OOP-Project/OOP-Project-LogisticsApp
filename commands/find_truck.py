@@ -22,14 +22,14 @@ class FindTruck(BaseCommand):
         packages_weight = try_parse_int(
             weight_str, 'Weight should be an integer number')
         route_distance = Distances.calculate_distance(locations)
-        suitable_trucks, involved_trucks, unsuitable_trucks_name = self.app_data.find_suitable_trucks(packages_weight, route_distance)
+        suitable_trucks, involved_trucks, unsuitable_trucks = self.app_data.find_suitable_trucks(packages_weight, route_distance)
         if not suitable_trucks:
             return "No suitable trucks were found"
         
         if not involved_trucks:
-            trucks_info = f'{TruckTypes.format_truck_info(suitable_trucks, unsuitable_trucks_name)}'
+            trucks_info = f'{TruckTypes.format_truck_info(suitable_trucks, unsuitable_trucks)}'
         else:
-            trucks_info = f'{TruckTypes.format_truck_info(suitable_trucks, unsuitable_trucks_name)}\n{Schedule.info()}\n{"\n".join(involved_trucks)}'
+            trucks_info = f'{TruckTypes.format_truck_info(suitable_trucks, unsuitable_trucks)}\n{Schedule.info()}\n{"\n".join(involved_trucks)}'
   
         return trucks_info
         
