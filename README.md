@@ -185,9 +185,7 @@ CheckRouteCapacity 2 ADL BRI 11000
 end
 ```
 
-# Delivery Management System
-
-## Use Cases
+# Use Cases
 
 ### Use Case #1
 
