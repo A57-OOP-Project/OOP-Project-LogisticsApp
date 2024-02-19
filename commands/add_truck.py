@@ -26,7 +26,6 @@ class AddTruck(BaseCommand):
         # Checks if there is an assigned truck to the selected route
         if route.truck != None:
             result_str = f'To the route id #{route_id} currently is assigned truck id #{route.truck.id}. The truck reassignment is expected\n'
-        # Assumption: Each route has one truck so if truck instance is created, it is assigned.
         # Check if truck is not assigned hence not created as an instance.
         # If not created, creates an instance of a truck, adds to list in app data and to route, assigns capacity of route.locations as per the truck capacity
         # If created, checks for conflicint schedule
