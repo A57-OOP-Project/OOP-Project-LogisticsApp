@@ -29,5 +29,5 @@ class TruckTypes:
             if truck_type.upper() in unsuitable_trucks:
                 continue
             truck_ids = [truck_id for truck_id in suitable_trucks if truck_id in range(*ids_range)]
-            truck_info.append(f"Name: {truck_type}, Capacity: {cls.DATA[truck_type.upper()]['capacity']} kg, Max Range: {cls.DATA[truck_type.upper()]['max_range']} km\nTruck IDs: {', '.join(map(str, truck_ids))}\n")
-        return f"Available trucks with appropriate capacity and range:\n{''.join(truck_info)}"
+            truck_info.append(f"Name: {truck_type}, Capacity: {cls.DATA[truck_type.upper()]['capacity']} kg, Max Range: {cls.DATA[truck_type.upper()]['max_range']} km\nTruck IDs: {', '.join(map(str, truck_ids))}")
+        return f"Available trucks with appropriate capacity and range:\n{'\n'.join(truck_info)}"

@@ -2,7 +2,7 @@
 
 class Package:
    
-    def __init__(self, id, start_location, end_location, weight, contact_info):
+    def __init__(self, id: int, start_location: str, end_location: str, weight: int, contact_info: str):
        self._id = id
        self.start_location = start_location
        self.end_location = end_location
@@ -12,15 +12,15 @@ class Package:
        self.expected_arrival_time = None
     
     @property
-    def id(self):
+    def id(self) -> int:
         return self._id
 
     @property
-    def weight(self):
+    def weight(self) -> int:
         return self._weight
 
     @property
-    def start_location(self):
+    def start_location(self) ->str:
         return self._start_location
 
     @start_location.setter
@@ -28,7 +28,7 @@ class Package:
         self._start_location = value
 
     @property
-    def end_location(self):
+    def end_location(self) ->str:
         return self._end_location
 
     @end_location.setter
@@ -36,7 +36,7 @@ class Package:
         self._end_location = value
 
     @property
-    def contact_info(self):
+    def contact_info(self) -> str:
         return self._contact_info
 
     @contact_info.setter
@@ -44,7 +44,7 @@ class Package:
         self._contact_info = value
 
     @property
-    def expected_arrival_time(self):
+    def expected_arrival_time(self) -> str:
         return self._expected_arrival_time
 
     @expected_arrival_time.setter
