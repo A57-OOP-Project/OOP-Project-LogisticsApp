@@ -6,7 +6,7 @@ class Engine:
         self.app_data = self._command_factory.get_app_data()
         
     def start(self):
-        self.app_data.load_data() #Load data from file if it exists
+        # self.app_data.load_data() #Load data from file if it exists
         
         
         while True:
@@ -22,7 +22,7 @@ class Engine:
                 output = err.args[0]
             print(output)   
               
-        self.app_data.save_data()
+        # self.app_data.save_data()
 
         #print('\n'.join(output)) 
 

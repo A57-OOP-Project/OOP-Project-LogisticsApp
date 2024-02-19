@@ -21,7 +21,7 @@ It supports packages, routes, trucks and customer information. Embedded in the a
     - **Start location** - should be text (string) using the location hub abbreviaton available further below
     - **End location** - should be text (string) using the location hub abbreviaton available further below
     - **Weight of the package** - should be a number up to the maximum capacity of the truck
-    - **Customer contact info** - ????????????
+    - **Customer contact info** - please add a string with no spaces
 
 &ensp;&ensp;&ensp;It automatically creates an ID of the package. <br/>
 &ensp;&ensp;&ensp;Example: `CreatePackage BRI MEL 1500 Pesho,phone:0888777555`
@@ -136,15 +136,13 @@ The following **truck types** are available to be added as Truck with packages o
 ## Abbreviations:
 &ensp;&ensp;&ensp;The following abbreviations are used for the location hubs:<br/>
 
-    SYD = SYDNEY<br/>
-    MEL = MELBOURNE<br/>
-    ADL = ADELAIDE<br/>
-    ASP = ALICE SPRINGS<br/>
-    BRI = BRISBANE<br/>
-    DAR = DARWIN<br/>
-    PER = PERTH<br/>
-
-
+    SYD = SYDNEY
+    MEL = MELBOURNE
+    ADL = ADELAIDE
+    ASP = ALICE SPRINGS
+    BRI = BRISBANE
+    DAR = DARWIN 
+    PER = PERTH 
 
 
 ## Example code with all functionality
@@ -187,13 +185,5 @@ CheckRouteCapacity 2 ADL BRI 11000
 end
 ```
 
-
-
-
-
-Questions:
-- CreatePackage BRI MEL 1500 Pesho,phone:0888777555 have no -> between the locations
-- how to know what the route id is 
-- in `AddTruck` how does the console user what ID to input. Has the truck being created prior to this command. I do not think so. - **Truck ID** - truck ID to which we want to assign the package. If no such exists or at capacity it creates a new?
 
 

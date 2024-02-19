@@ -10,3 +10,6 @@ class EmployeePosition:
                 f'None of the possible employee positions  matches the value {value}.')
 
         #return value
+
+# Not used
+# For further development
