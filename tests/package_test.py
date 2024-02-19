@@ -2,7 +2,7 @@ import unittest
 from models.package import Package
 
 
-class PackageShould(unittest.TestCase):
+class Package_Should(unittest.TestCase):
     def setUp(self):
         self.package = Package(
             id=123,

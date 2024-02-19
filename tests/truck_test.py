@@ -1,7 +1,7 @@
 import unittest
 from models.truck import Truck
 
-class Truck_should(unittest.TestCase):
+class Truck_Should(unittest.TestCase):
     correct_truck = Truck('scania',1001)
     
     def test_initialiser_whenAllDataIsCorrect(self):
