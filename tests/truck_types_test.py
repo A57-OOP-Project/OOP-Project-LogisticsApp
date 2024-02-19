@@ -1,10 +1,23 @@
-from unittest import TestCase
+import unittest
+from unittest.mock import patch
 from models.constants.truck_types import TruckTypes
-from models.truck import Truck
 
-# class TruckTypes_should(TestCase):
-    # def test_truckinfo_validOutput(self):
-    #     # truck = Truck('SCANIA', 1001)
-    #     self.assertEqual("Name: SCANIA, Capacity: 42000 kg, Max Range: 8000 km\nTruck IDs: 1001,1002,1003,1004,1005,1006,1007,1008,1009,1010)",f"Name: {TruckTypes.truck_type}, Capacity: {TruckTypes.DATA[TruckTypes.format_truck_info.truck_type.upper()]['capacity']} kg, Max Range: {TruckTypes.DATA[TruckTypes.format_truck_info.truck_type.upper()]['max_range']} km\nTruck IDs: {', '.join(map(str, TruckTypes.truck_ids))}")
 
-    # # def check_truckinfoIDs_areValidnumbers(self):
+class TruckTypes_Should(unittest.TestCase):
+    def test_format_truck_info(self):
+        # suitable and unsuitable trucks for testing
+        suitable_trucks = [1001, 1003, 1015, 1027, 1035]
+        unsuitable_trucks = {'MAN'}  # 'MAN' trucks are unsuitable for this test
+
+        with patch.object(TruckTypes, 'DATA', {
+            'SCANIA': {'capacity': 42000, 'max_range': 8000},
+            'MAN': {'capacity': 37000, 'max_range': 10000},
+            'ACTROS': {'capacity': 26000, 'max_range': 13000}
+        }):
+            expected_output = (
+                "Available trucks with appropriate capacity and range:\n"
+                "Name: Scania, Capacity: 42000 kg, Max Range: 8000 km\nTruck IDs: 1001, 1003\n"
+                "Name: Actros, Capacity: 26000 kg, Max Range: 13000 km\nTruck IDs: 1027, 1035\n"
+            )
+            output = TruckTypes.format_truck_info(suitable_trucks, unsuitable_trucks)
+            self.assertEqual(output, expected_output)

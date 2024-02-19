@@ -3,7 +3,7 @@ from datetime import datetime
 from models.location import Location
 
 
-class LocationShould(unittest.TestCase):
+class Location_Should(unittest.TestCase):
 
     def setUp(self):
         self.location = Location("SYD", datetime.now())

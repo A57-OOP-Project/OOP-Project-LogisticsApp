@@ -6,7 +6,7 @@ from models.location import Location
 from models.package import Package
 
 
-class RouteShould(unittest.TestCase):
+class Route_Should(unittest.TestCase):
     def setUp(self):
         # locations of the route
         self.location1 = Location("SYD", datetime(2024, 2, 17, 8, 0))
@@ -69,6 +69,4 @@ class RouteShould(unittest.TestCase):
     def test_get_delivery_weight_after_final_stop(self):
         delivery_weight = self.route.get_delivery_weight(8)  # simulating 16:00
         self.assertEqual(delivery_weight, 26000)
-
-
 
