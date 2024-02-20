@@ -10,40 +10,23 @@ class Schedule:
     
     
    @classmethod
-   def add_route(cls, truck_id, route_id): 
+   def add_route(cls, truck_id: int, route_id: int): 
+        '''
+         The method is responsible for adding a route ID to the list of routes assigned to a particular truck ID in the DATA dictionary.
+    '''
         if truck_id in cls.DATA:
             cls.DATA[truck_id].append(route_id)
         else:
             cls.DATA[truck_id] = [route_id]    # Q - I do not understand this. What format does it result it? 
        
-        
-#    @classmethod
-#    def update_route(cls, truck_id, route_id):
-#        if truck_id in cls.DATA and route_id in cls.DATA[truck_id]:
-#            cls.DATA[truck_id].remove(route_id)
-#        else:
-#            raise ValueError('Invalid truck id or route id') 
-      
-    
-#    @classmethod
-#    def is_conflict(cls, truck_id, route_id_number) -> bool:
-#        if truck_id not in cls.DATA or route_id_number not in cls.DATA[truck_id]:
-#            raise ValueError('Invalid truck id or route id')
-#        new_route = ApplicationData.find_route_by_id(route_id_number)
-#        start_time_new_route = new_route.locations[0].time
-#        end_time_new_route = new_route.locations[-1].time
             
-#        for route_id in cls.DATA[truck_id]:
-#            route_in_schedule = ApplicationData.find_route_by_id(route_id)
-#            start_time_route_in_schedule = route_in_schedule.locations[0].time
-#            end_time_route_in_schedule = route_in_schedule.locations[-1].time
-#            if start_time_route_in_schedule <= end_time_new_route and end_time_route_in_schedule >= start_time_new_route:
-#                return True
-           
-#        return False
     
    @classmethod
    def info(cls):
+       '''
+       The method is responsible for generating information about the current schedule of trucks and their assigned routes.
+       It returns generated schedule information string.
+       '''
        if not cls.DATA:
            return ''
        schedule_info = [f'The schedule for the trucks that are currently involved:']
@@ -52,7 +35,13 @@ class Schedule:
     
        return "\n".join(schedule_info)  
        
-            
+ 
+#    @classmethod
+#    def update_route(cls, truck_id, route_id):
+#        if truck_id in cls.DATA and route_id in cls.DATA[truck_id]:
+#            cls.DATA[truck_id].remove(route_id)
+#        else:
+#            raise ValueError('Invalid truck id or route id')            
              
                
            
