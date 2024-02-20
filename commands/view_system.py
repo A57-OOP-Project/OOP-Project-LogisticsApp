@@ -5,7 +5,7 @@ from commands.validation_helpers import validate_params_count, try_parse_int
 class ViewSystem(BaseCommand):
     
     '''
-    print information about all delivery routes in progress:
+    Prints information about all delivery routes in progress:
     it contains route ID, each route's stops, delivery weight, and the expected current stop based on the time of the day
     '''
     def __init__(self, params: list[str],

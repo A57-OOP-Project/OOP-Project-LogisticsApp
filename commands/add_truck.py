@@ -6,8 +6,6 @@ from models.route import Route
 from models.schedule import Schedule
 
 class AddTruck(BaseCommand):
-    #creates an instance of class Truck 
-    #appends created truck to the selected route and to the corresponding list in ApplicationData 
     
     def __init__(self, params: list[str],
                  app_data: ApplicationData):
@@ -15,15 +13,20 @@ class AddTruck(BaseCommand):
         super().__init__(params, app_data)
         
     def execute(self):
+        '''
+        Encapsulates the logic for adding a truck to a route, handling both the case where a new truck is created
+        and assigned and the case where an existing truck is assigned. It also checks for schedule conflicts 
+        and updates the route's capacity accordingly
+        '''
         name, truck_id_str, route_id_str = self.params
         route_id = try_parse_int(
             route_id_str, 'Route ID should be an integer number')
         truck_id = try_parse_int(
             truck_id_str, 'Truck ID should be an integer number')
         result_str = ''
-        # Checks if selected route exists 
-        route = self.app_data.find_route_by_id(route_id)
-        # Checks if there is an assigned truck to the selected route
+        # route lookup 
+        route = self.app_data.find_route_by_id(route_id) 
+       
         if route.truck != None:
             result_str = f'To the route id #{route_id} currently is assigned truck id #{route.truck.id}. The truck reassignment is expected\n'
         # Check if truck is not assigned hence not created as an instance.
