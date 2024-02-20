@@ -150,7 +150,7 @@ The following **truck types** are available to be added as Truck with packages o
 CreatePackage BRI MEL 1500 Pesho,phone:0888777555
 CreatePackage BRI SYD 11000 Olesya,phone:0888999777
 FindRoute BRI MEL
-CreateRoute BRI->SYD->MEL 2024-02-17 14:00
+CreateRoute BRI->SYD->MEL 2024-02-20 13:00
 FindTruck 13000 BRI SYD MEL
 AddTruck scania 1001 1
 ViewRoute 1
@@ -165,7 +165,7 @@ CreatePackage ASP BRI 5000 Zoya,phone:0888555888
 CreatePackage ASP ADL 800 KuKu,phone:0888678678
 CreatePackage MEL BRI 1000 CarnivalKids,phone:0888567567
 CreatePackage ADL SYD 2000 Bravo,phone:0888123456
-CreateRoute ASP->ADL->MEL->SYD->BRI 2024-02-17 23:00
+CreateRoute ASP->ADL->MEL->SYD->BRI 2024-02-20 12:00
 FindTruck 28000 ASP ADL MEL SYD BRI
 AddTruck scania 1002 2
 AddPackage 2 3 
@@ -200,12 +200,13 @@ The system reports that there are two routes:
 Both routes' trucks have free capacity, and the employee suggests the first one, as the package will arrive one day earlier.
 The customer agrees and the employee uses the system to add the delivery package to the first route and to update the package’s expected arrival time to Oct 11th 18:00h.
 ```
-CreatePackage
-FindRoute
-CreateRoute
-FindTruck
-AddTruck
-AddPackage
+CreatePackage SYD MEL 45 AustralianCustomer1
+FindRoute SYD MEL
+CreateRoute SYD->MEL 2024-02-20 06:00
+FindTruck 10000 SYD MEL
+AddTruck Scania 1001 1
+AddPackage 1 1
+ViewSystem 0
 ```
 ### Use Case #2
 
@@ -216,16 +217,18 @@ Many packages with total weight of 23000kg have gathered in the hub in Alice Spr
 The system determines the route distance to 4041km and calculates estimated arrival times for each of the locations based on a predefined average speed of 87km/h.
 The employee then finds a free truck that meets the required range and capacity and proceeds to bulk assign the packages to the newly created route by using the route id and the packages’ ids.
 ```
-CreateRoute
-FindTruck
-AddPackage
+CreatePackage ASP BRI 23000
+CreateRoute ASP->ADL->MEL->SYD->BRI 2024-02-20 06:00
+FindTruck 23000 ASP BRI
+AddPackage 1 1
+ViewSystem 0
 ```
 ### Use Case #3
 
 A manager at the company uses the system to find information about all delivery routes in progress.
 The system responds with information that contains each route’s stops, delivery weight, and the expected current stop based on the time of the day.
 ```
-ViewSystem
+ViewSystem 0
 ```
 ### Use Case #4
 
@@ -239,6 +242,15 @@ ViewNotAssigned
 A customer contacts the office to request information about their package. The customer provides the id that they received when the package was created, and an employee enters the package id in the system. 
 It responds with detailed information which is then emailed to the customer.
 ```
-ViewPackage
+CreatePackage ASP BRI 2000 Zoya,phone:0888555888
+CreatePackage ASP BRI 7000 Zoya,phone:0888555888
+CreatePackage ASP BRI 10000 Zoya,phone:0888555888
+CreatePackage ASP BRI 5000 Zoya,phone:0888555888
+CreatePackage ASP ADL 800 KuKu,phone:0888678678
+CreatePackage MEL BRI 1000 CarnivalKids,phone:0888567567
+CreatePackage ADL SYD 2000 Bravo,phone:0888123456
+ViewPackage 2
+ViewPackage 4
+ViewPackage 5
 ```
 

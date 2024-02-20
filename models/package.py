@@ -65,12 +65,14 @@ class Package:
             expected_arrival_info = f"Expected Arrival Time: {self.expected_arrival_time}"
         else:
             expected_arrival_info = f"Currently the package id #{self._id} is not assigned to any route"
-            
-        return f"Package ID: {self._id}\n" \
+        
+        return f"------------------------\n" \
+               f"Package ID: {self._id}\n" \
                f"Start Location: {self.start_location}\n" \
                f"End Location: {self.end_location}\n" \
                f"Weight: {self.weight} kg\n" \
                f"Contact Info: {self.contact_info}\n" \
-               f"{expected_arrival_info}"
+               f"{expected_arrival_info}\n" \
+               f"------------------------"
     
     
