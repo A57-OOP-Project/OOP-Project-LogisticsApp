@@ -28,6 +28,14 @@ class Distances:
     
     @classmethod
     def calculate_distance(cls, locations: list[str]):
+        '''
+         Parameters:
+            locations: list[str] - a list of location strings
+         
+        The method is  responsible for calculating the total distance between a sequence of locations. 
+        It returns the total distance calculated.  
+        
+        '''
         distance = 0
         for i in range(len(locations) - 1):
             distance += cls.distances[locations[i]][locations[i + 1]]

@@ -31,13 +31,7 @@ class Truck:
    def capacity(self):
       return self._capacity
    
-   # """  @capacity.setter
-   # def capacity(self, value):
-   #    if value >= 0:
-   #       self._capacity = value
-   #    else:
-   #       raise ValueError("Invalid value for the capacity of the truck") """
-      
+         
    def info(self):
       return f"Truck ID: {self.id}\nName: {self.name}\nCapacity: {self.capacity} kg\nMax Range: {self.max_range} km"
    

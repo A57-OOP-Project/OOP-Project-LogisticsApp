@@ -61,6 +61,11 @@ class Package:
     
     
     def info(self):
+        
+        '''
+        The method generates and returns a formatted string containing information about a package
+        
+        '''
         if (self.route is not None) and (self.expected_arrival_time is not None):
             expected_arrival_info = f"Expected Arrival Time: {self.expected_arrival_time}"
         else:
